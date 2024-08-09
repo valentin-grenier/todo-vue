@@ -7,7 +7,7 @@ Objectifs de la liste :
 -   <s>On vérifie s'il y a bien un nom pour la tâche avant de l'ajouter</s>
 -   <s>Pour chaque nouvelle tâche, on a une case à cocher pour marquer la tâche comme faite</s>
 -   <s>Une tâche terminée sera barrée (CSS)</s>
--   On affiche les tâches à faire en premier
+-   <s>On affiche les tâches à faire en premier</s>
 -   Une case à cocher permet de masquer les tâches terminées
 
 Les tâches doivent respecter le format suivant :

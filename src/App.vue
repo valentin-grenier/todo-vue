@@ -39,7 +39,33 @@
 <script setup>
 import { ref } from 'vue';
 
-const tasks = ref([]);
+const tasks = ref([
+	{
+		title: 'Complete client project',
+		completed: false,
+		date: new Date('2024-08-10'),
+	},
+	{
+		title: 'Update portfolio website',
+		completed: true,
+		date: new Date('2024-07-28'),
+	},
+	{
+		title: 'Attend networking event',
+		completed: false,
+		date: new Date('2024-08-15'),
+	},
+	{
+		title: 'Submit tax documents',
+		completed: false,
+		date: new Date('2024-08-18'),
+	},
+	{
+		title: 'Research new JavaScript frameworks',
+		completed: true,
+		date: new Date('2024-07-25'),
+	},
+]);
 
 const newTask = ref({
 	title: '',
@@ -63,12 +89,31 @@ const addTask = () => {
 			completed: false,
 			date: null,
 		};
+
+		sortTasks();
 	}
 };
 
 const completeTask = (task) => {
 	task.completed = !task.completed;
+
+	sortTasks();
 };
+
+const sortTasks = () => {
+	tasks.value.sort((a, b) => {
+		if (a.completed && !b.completed) {
+			return 1;
+		} else if (!a.completed && b.completed) {
+			return -1;
+		} else {
+			return 0;
+		}
+	});
+};
+
+// == Sort tasks on load
+sortTasks();
 </script>
 
 <style scoped>
