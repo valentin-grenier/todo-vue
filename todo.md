@@ -2,9 +2,10 @@
 
 Objectifs de la liste :
 
--   On affiche un message s'il n'y a pas de tâche
--   On a en haut un champ texte avec un bouton "Ajouter" pour créer une nouvelle tâche
--   Pour chaque nouvelle tâche, on a une case à cocher pour marquer la tâche comme faite
+-   <s>On affiche un message s'il n'y a pas de tâche</s>
+-   <s>On a en haut un champ texte avec un bouton "Ajouter" pour créer une nouvelle tâche</s>
+-   On vérifie s'il y a bien un nom pour la tâche avant de l'ajouter
+-   <s>Pour chaque nouvelle tâche, on a une case à cocher pour marquer la tâche comme faite</s>
 -   Une tâche terminée sera barrée (CSS)
 -   On affiche les tâches à faire en premier
 -   Une case à cocher permet de masquer les tâches terminées
