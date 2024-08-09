@@ -20,8 +20,12 @@
 
 			<div v-else>
 				<ul>
-					<li v-for="task in tasks">
-						<input type="checkbox" @click="completeTask(task)" />
+					<li v-for="task in tasks" :key="task">
+						<input
+							type="checkbox"
+							@click="completeTask(task)"
+							v-model="task.completed"
+						/>
 						<span :class="{ completed: task.completed }">
 							{{ task.title }}
 						</span>
@@ -35,25 +39,31 @@
 <script setup>
 import { ref } from 'vue';
 
-const tasks = ref([
-	{
-		title: '1',
-		completed: false,
-		date: '',
-	},
-]);
+const tasks = ref([]);
+
 const newTask = ref({
 	title: '',
 	completed: false,
-	date: '',
+	date: null,
 });
 
 const addTask = () => {
-	tasks.value.push(newTask.value);
-	newTask.value = {
-		...newTask,
-		title: '',
-	};
+	if (newTask.value.title === '') {
+		console.error('Add a title!');
+	} else {
+		const date = new Date().toJSON().slice(0, 10).split('-').join('');
+		tasks.value.push({
+			title: newTask.value.title,
+			completed: false,
+			date: date,
+		});
+
+		newTask.value = {
+			title: '',
+			completed: false,
+			date: null,
+		};
+	}
 };
 
 const completeTask = (task) => {
@@ -138,5 +148,6 @@ ul li span {
 
 ul li span.completed {
 	text-decoration: line-through;
+	opacity: 0.5;
 }
 </style>
