@@ -31,6 +31,10 @@
 						</span>
 					</li>
 				</ul>
+
+				<button id="hide-tasks" @click="hideCompletedTasks">
+					Hide completed tasks
+				</button>
 			</div>
 		</div>
 	</main>
@@ -112,6 +116,10 @@ const sortTasks = () => {
 	});
 };
 
+const hideCompletedTasks = () => {
+	tasks.value = tasks.value.filter((task) => !task.completed);
+};
+
 // == Sort tasks on load
 sortTasks();
 </script>
@@ -155,7 +163,7 @@ form input {
 	border-radius: 0.4rem;
 }
 
-form button {
+button {
 	border: none;
 	padding: 0.5rem 1.5rem;
 	border-radius: 0.4rem;
@@ -180,6 +188,7 @@ form button {
 
 ul {
 	list-style: none;
+	margin-bottom: 1rem;
 }
 
 ul li:not(:last-of-type) {
