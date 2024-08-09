@@ -21,8 +21,10 @@
 			<div v-else>
 				<ul>
 					<li v-for="task in tasks">
-						<input type="checkbox" name="" id="" />
-						{{ task.title }}
+						<input type="checkbox" @click="completeTask(task)" />
+						<span :class="{ completed: task.completed }">
+							{{ task.title }}
+						</span>
 					</li>
 				</ul>
 			</div>
@@ -52,6 +54,10 @@ const addTask = () => {
 		...newTask,
 		title: '',
 	};
+};
+
+const completeTask = (task) => {
+	task.completed = !task.completed;
 };
 </script>
 
@@ -123,5 +129,14 @@ ul {
 
 ul li:not(:last-of-type) {
 	margin-bottom: 0.5rem;
+}
+
+ul li span {
+	display: inline-block;
+	margin-left: 0.5rem;
+}
+
+ul li span.completed {
+	text-decoration: line-through;
 }
 </style>
