@@ -76,8 +76,6 @@ const addTask = () => {
 
 const completeTask = (task) => {
 	task.completed = !task.completed;
-
-	sortTasks();
 };
 
 const sortTasks = () => {
@@ -91,9 +89,10 @@ const sortTasks = () => {
 		}
 	});
 
-	const sortedTasks = tasks.value.toSorted((a, b) =>
-		a.completed > b.completed ? 1 : -1
-	);
+	const sortedTasks = tasks.value.toSorted((a, b) => {
+		console.log('demo');
+		a.completed > b.completed ? 1 : -1;
+	});
 
 	return sortedTasks;
 };
@@ -101,9 +100,6 @@ const sortTasks = () => {
 const hideCompletedTasks = () => {
 	tasks.value = tasks.value.filter((task) => !task.completed);
 };
-
-// == Sort tasks on load
-sortTasks();
 </script>
 
 <style scoped>
