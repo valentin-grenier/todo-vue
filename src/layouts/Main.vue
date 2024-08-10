@@ -15,6 +15,11 @@
 					@uncheck="updateTask(task, false)"
 				/>
 			</ul>
+
+			<label id="hide-completed">
+				<input type="checkbox" v-model="hideCompleted" />
+				Hide completed tasks
+			</label>
 		</div>
 	</main>
 </template>
@@ -25,6 +30,7 @@ import tasks from '../data';
 import Checkbox from '../components/Checkbox.vue';
 
 const tasksRef = ref(tasks.value);
+const hideCompleted = ref(false);
 
 const updateTask = (task, completed) => {
 	const index = tasksRef.value.findIndex((t) => t.date === task.date);
@@ -48,7 +54,15 @@ const sortTasks = () => {
 		}
 	});
 
+	if (hideCompleted.value === true) {
+		return sortedTasks.filter((t) => !t.completed);
+	}
+
 	return sortedTasks;
+};
+
+const hideCompletedTasks = () => {
+	return (tasks.value = tasks.value.filter((task) => !task.completed));
 };
 </script>
 
@@ -68,5 +82,14 @@ p {
 
 ul {
 	padding-left: 0.5rem;
+}
+
+label#hide-completed {
+	display: block;
+	background: rgb(242, 249, 254);
+	padding: 0.5rem;
+	border-radius: 0.75rem;
+	margin-top: 1.5rem;
+	width: fit-content;
 }
 </style>
