@@ -1,77 +1,14 @@
 <template>
-	<header>
-		<h1>TodoList VueJS</h1>
-	</header>
-
-	<main>
-		<form @submit.prevent="addTask">
-			<input
-				type="text"
-				placeholder="Write your task..."
-				v-model="newTask"
-			/>
-			<button :disabled="newTask.length === 0">Add</button>
-		</form>
-
-		<div class="tasks-list">
-			<p v-if="tasks.length === 0" class="informative-text">
-				Add some tasks 😎
-			</p>
-
-			<div v-else>
-				<label id="hide-tasks">
-					<input type="checkbox" v-model="hideCompleted" />
-					Hide completed tasks
-				</label>
-
-				<ul>
-					<li
-						v-for="task in sortTasks()"
-						:key="task.date"
-						:class="{ completed: task.completed }"
-					>
-						<label>
-							<input type="checkbox" v-model="task.completed" />
-							{{ task.title }}
-						</label>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</main>
+	<div class="container">
+		<Layout>
+			<template v-slot:header></template>
+			<template v-slot:main></template>
+		</Layout>
+	</div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
-const newTask = ref('');
-const hideCompleted = ref(false);
-const tasks = ref([
-	{
-		title: 'First task',
-		completed: true,
-		date: 1,
-	},
-	{
-		title: 'Second task',
-		completed: false,
-		date: 2,
-	},
-]);
-
-const addTask = () => {
-	if (newTask.value.title === '') {
-		console.error('Add a title!');
-	} else {
-		tasks.value.push({
-			title: newTask.value,
-			completed: false,
-			date: Date.now(),
-		});
-
-		newTask.value = '';
-	}
-};
+import Layout from './layouts/Layout.vue';
 
 const sortTasks = () => {
 	const sortedTasks = tasks.value.toSorted((a, b) => {
