@@ -7,7 +7,7 @@
 		<div v-else>
 			<span>My tasks :</span>
 
-			<ul v-for="task in tasks">
+			<ul v-for="task in sortTasks()">
 				<Checkbox
 					:task="task"
 					:key="task.date"
@@ -35,6 +35,20 @@ const updateTask = (task, completed) => {
 	}
 
 	console.log(tasks.value[0]);
+};
+
+const sortTasks = () => {
+	const sortedTasks = tasks.value.toSorted((a, b) => {
+		if (a.completed === b.completed) {
+			return 0;
+		} else if (a.completed) {
+			return 1;
+		} else {
+			return -1;
+		}
+	});
+
+	return sortedTasks;
 };
 </script>
 
