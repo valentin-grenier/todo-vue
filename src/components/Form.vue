@@ -11,9 +11,24 @@
 
 <script setup>
 import { ref } from 'vue';
+import tasks from '../data';
 import Button from './Button.vue';
 
-const newTask = ref('test');
+const newTask = ref('');
+
+const addTask = () => {
+	if (newTask.length === 0) {
+		console.error('Add a task!');
+		return;
+	} else {
+		tasks.value.push({
+			title: newTask.value,
+			completed: false,
+			date: Date.now(),
+		});
+		newTask.value = '';
+	}
+};
 </script>
 
 <style scoped>
