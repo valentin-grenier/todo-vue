@@ -8,9 +8,9 @@
 			<input
 				type="text"
 				placeholder="Write your task..."
-				v-model="newTask.title"
+				v-model="newTask"
 			/>
-			<button>Add</button>
+			<button :disabled="newTask.length === 0">Add</button>
 		</form>
 
 		<div class="tasks-list">
@@ -20,7 +20,7 @@
 
 			<div v-else>
 				<ul>
-					<li v-for="task in tasks" :key="task">
+					<li v-for="task in tasks" :key="task.date">
 						<input
 							type="checkbox"
 							@click="completeTask(task)"
@@ -45,54 +45,30 @@ import { ref } from 'vue';
 
 const tasks = ref([
 	{
-		title: 'Complete client project',
-		completed: false,
-		date: new Date('2024-08-10'),
-	},
-	{
-		title: 'Update portfolio website',
+		title: 'First task',
 		completed: true,
-		date: new Date('2024-07-28'),
+		date: 1,
 	},
 	{
-		title: 'Attend networking event',
+		title: 'Second task',
 		completed: false,
-		date: new Date('2024-08-15'),
-	},
-	{
-		title: 'Submit tax documents',
-		completed: false,
-		date: new Date('2024-08-18'),
-	},
-	{
-		title: 'Research new JavaScript frameworks',
-		completed: true,
-		date: new Date('2024-07-25'),
+		date: 2,
 	},
 ]);
 
-const newTask = ref({
-	title: '',
-	completed: false,
-	date: null,
-});
+const newTask = ref('');
 
 const addTask = () => {
 	if (newTask.value.title === '') {
 		console.error('Add a title!');
 	} else {
-		const date = new Date().toJSON().slice(0, 10).split('-').join('');
 		tasks.value.push({
-			title: newTask.value.title,
+			title: newTask.value,
 			completed: false,
-			date: date,
+			date: Date.now(),
 		});
 
-		newTask.value = {
-			title: '',
-			completed: false,
-			date: null,
-		};
+		newTask.value = '';
 
 		sortTasks();
 	}
@@ -171,6 +147,10 @@ button {
 	color: #fff;
 	font-weight: 700;
 	cursor: pointer;
+}
+
+button:disabled {
+	opacity: 0.5;
 }
 
 .tasks-list {
