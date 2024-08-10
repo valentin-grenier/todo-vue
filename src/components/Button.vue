@@ -1,17 +1,19 @@
 <template>
-	<button :disabled="disabled"><slot></slot></button>
+	<button :disabled="newTask.length === 0">
+		<slot></slot>
+	</button>
 </template>
 
 <script setup>
-defineProps({
-	disabled: Boolean,
-});
+const newTask = defineModel();
 </script>
 
 <style scoped>
 button {
 	border: none;
-	padding: 0rem 1rem;
 	border-radius: 0.25rem;
+	padding: 0.25rem 1rem;
+	background: white;
+	font-weight: bold;
 }
 </style>

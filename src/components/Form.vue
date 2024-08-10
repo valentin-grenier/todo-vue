@@ -2,48 +2,34 @@
 	<form @submit.prevent="addTask">
 		<input
 			type="text"
-			placeholder="Write your todo here..."
-			v-model="task"
+			placeholder="What's your today todo?"
+			v-model="newTask"
 		/>
-
-		<Button :disabled="task.length === 0">Add</Button>
+		<Button v-model="newTask">Add task</Button>
 	</form>
-
-	localTask: {{ localTask }}
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import Button from './Button.vue';
 
-const task = defineModel();
-const props = defineProps({
-	modelValue: String,
-});
-
-const emit = defineEmits(['update:modelValue', 'add-task']);
-
-const localTask = ref(props.modelValue);
-
-const addTask = () => {
-	if (localTask.value.trim()) {
-		emit('add-task', localTask);
-		localTask.value = '';
-	}
-};
+const newTask = ref('test');
 </script>
 
 <style scoped>
 form {
 	display: flex;
-	justify-content: space-between;
 	gap: 0.5rem;
 }
+
 input {
-	flex: 1;
-	height: 100%;
 	border: none;
 	border-radius: 0.25rem;
-	padding: 0.5rem 1rem;
+	padding: 0.5rem;
+	flex: 1;
+}
+
+input::placeholder {
+	color: #00000050;
 }
 </style>
