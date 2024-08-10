@@ -20,7 +20,7 @@
 
 			<div v-else>
 				<ul>
-					<li v-for="task in tasks" :key="task.date">
+					<li v-for="task in sortTasks()" :key="task.date">
 						<input
 							type="checkbox"
 							@click="completeTask(task)"
@@ -90,6 +90,12 @@ const sortTasks = () => {
 			return 0;
 		}
 	});
+
+	const sortedTasks = tasks.value.toSorted((a, b) =>
+		a.completed > b.completed ? 1 : -1
+	);
+
+	return sortedTasks;
 };
 
 const hideCompletedTasks = () => {
