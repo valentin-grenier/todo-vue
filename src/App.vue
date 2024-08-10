@@ -2,26 +2,13 @@
 	<div class="container">
 		<Layout>
 			<template v-slot:header></template>
+			<template v-slot:main></template>
 		</Layout>
 	</div>
 </template>
 
 <script setup>
 import Layout from './layouts/Layout.vue';
-
-const addTask = () => {
-	if (newTask.value.title === '') {
-		console.error('Add a title!');
-	} else {
-		tasks.value.push({
-			title: newTask.value,
-			completed: false,
-			date: Date.now(),
-		});
-
-		newTask.value = '';
-	}
-};
 
 const sortTasks = () => {
 	const sortedTasks = tasks.value.toSorted((a, b) => {
