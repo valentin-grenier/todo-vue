@@ -19,22 +19,23 @@
 			</p>
 
 			<div v-else>
+				<label id="hide-tasks">
+					<input type="checkbox" v-model="hideCompleted" />
+					Hide completed tasks
+				</label>
+
 				<ul>
-					<li v-for="task in sortTasks()" :key="task.date">
-						<input
-							type="checkbox"
-							@click="completeTask(task)"
-							v-model="task.completed"
-						/>
-						<span :class="{ completed: task.completed }">
+					<li
+						v-for="task in sortTasks()"
+						:key="task.date"
+						:class="{ completed: task.completed }"
+					>
+						<label>
+							<input type="checkbox" v-model="task.completed" />
 							{{ task.title }}
-						</span>
+						</label>
 					</li>
 				</ul>
-
-				<button id="hide-tasks" @click="hideCompletedTasks">
-					Hide completed tasks
-				</button>
 			</div>
 		</div>
 	</main>
@@ -43,6 +44,8 @@
 <script setup>
 import { ref } from 'vue';
 
+const newTask = ref('');
+const hideCompleted = ref(false);
 const tasks = ref([
 	{
 		title: 'First task',
@@ -56,8 +59,6 @@ const tasks = ref([
 	},
 ]);
 
-const newTask = ref('');
-
 const addTask = () => {
 	if (newTask.value.title === '') {
 		console.error('Add a title!');
@@ -69,30 +70,23 @@ const addTask = () => {
 		});
 
 		newTask.value = '';
-
-		sortTasks();
 	}
 };
 
-const completeTask = (task) => {
-	task.completed = !task.completed;
-};
-
 const sortTasks = () => {
-	tasks.value.sort((a, b) => {
-		if (a.completed && !b.completed) {
-			return 1;
-		} else if (!a.completed && b.completed) {
-			return -1;
-		} else {
+	const sortedTasks = tasks.value.toSorted((a, b) => {
+		if (a.completed === b.completed) {
 			return 0;
+		} else if (a.completed) {
+			return 1;
+		} else {
+			return -1;
 		}
 	});
 
-	const sortedTasks = tasks.value.toSorted((a, b) => {
-		console.log('demo');
-		a.completed > b.completed ? 1 : -1;
-	});
+	if (hideCompleted.value === true) {
+		return sortedTasks.filter((t) => t.completed === false);
+	}
 
 	return sortedTasks;
 };
@@ -141,6 +135,14 @@ form input {
 	border-radius: 0.4rem;
 }
 
+label#hide-tasks {
+	display: block;
+	background: rgb(201, 213, 222);
+	padding: 0.5rem;
+	margin-bottom: 1.5rem;
+	border-radius: 0.25rem;
+}
+
 button {
 	border: none;
 	padding: 0.5rem 1.5rem;
@@ -177,12 +179,7 @@ ul li:not(:last-of-type) {
 	margin-bottom: 0.5rem;
 }
 
-ul li span {
-	display: inline-block;
-	margin-left: 0.5rem;
-}
-
-ul li span.completed {
+ul li.completed {
 	text-decoration: line-through;
 	opacity: 0.5;
 }
