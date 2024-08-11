@@ -27,10 +27,20 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import tasks from '../data';
+//import tasks from '../data';
 import Task from '../components/Task.vue';
 
-const tasksRef = ref(tasks.value);
+const props = defineProps({
+	tasks: {
+		type: Array,
+		required: true,
+	},
+});
+
+console.log(props.tasks);
+
+//const tasksRef = ref(tasks.value);
+const tasksRef = ref(props.tasks);
 const hideCompleted = ref(false);
 
 const checkTask = (task) => {
