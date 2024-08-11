@@ -3,7 +3,7 @@ import { ref } from 'vue';
 const tasks = ref([
 	{
 		title: 'Washing machine',
-		completed: false,
+		completed: true,
 		date: 1,
 	},
 	{

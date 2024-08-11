@@ -71,6 +71,7 @@ main {
 	background: rgb(223, 238, 248);
 	padding: 1.5rem 1.25rem;
 	border-radius: 0.75rem;
+	margin-bottom: 1.5rem;
 }
 
 p {

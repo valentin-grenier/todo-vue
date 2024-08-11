@@ -3,6 +3,7 @@
 		<Layout>
 			<template v-slot:header></template>
 			<template v-slot:main></template>
+			<template v-slot:footer></template>
 		</Layout>
 	</div>
 </template>
