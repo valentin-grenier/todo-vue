@@ -7,38 +7,44 @@
 		<div v-else>
 			<span>My tasks :</span>
 
-			<ul v-for="task in sortTasks()">
-				<Checkbox
-					:task="task"
-					:key="task.date"
-					@check="updateTask(task, true)"
-					@uncheck="updateTask(task, false)"
-				/>
+			<ul v-for="task in sortedTasks">
+				<li :key="task.date">
+					<Task
+						:task="task"
+						@check="checkTask"
+						@uncheck="uncheckTask"
+					/>
+				</li>
 			</ul>
+
+			<label id="hide-completed">
+				<input type="checkbox" v-model="hideCompleted" />
+				Hide completed tasks
+			</label>
 		</div>
 	</main>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import tasks from '../data';
-import Checkbox from '../components/Checkbox.vue';
+import Task from '../components/Task.vue';
 
 const tasksRef = ref(tasks.value);
+const hideCompleted = ref(false);
 
-const updateTask = (task, completed) => {
-	const index = tasksRef.value.findIndex((t) => t.date === task.date);
-
-	if (index !== -1) {
-		tasksRef.value[index].completed = completed;
-		tasks.value = tasksRef.value;
-	}
-
-	console.log(tasks.value[0]);
+const checkTask = (task) => {
+	task.completed = true;
+	tasksRef.value = [...tasksRef.value];
 };
 
-const sortTasks = () => {
-	const sortedTasks = tasks.value.toSorted((a, b) => {
+const uncheckTask = (task) => {
+	task.completed = false;
+	tasksRef.value = [...tasksRef.value];
+};
+
+const sortedTasks = computed(() => {
+	const sortedTasks = tasksRef.value.slice().sort((a, b) => {
 		if (a.completed === b.completed) {
 			return 0;
 		} else if (a.completed) {
@@ -48,7 +54,15 @@ const sortTasks = () => {
 		}
 	});
 
+	if (hideCompleted.value) {
+		return sortedTasks.filter((t) => !t.completed);
+	}
+
 	return sortedTasks;
+});
+
+const hideCompletedTasks = () => {
+	return (tasks.value = tasks.value.filter((task) => !task.completed));
 };
 </script>
 
@@ -57,6 +71,7 @@ main {
 	background: rgb(223, 238, 248);
 	padding: 1.5rem 1.25rem;
 	border-radius: 0.75rem;
+	margin-bottom: 1.5rem;
 }
 
 p {
@@ -68,5 +83,15 @@ p {
 
 ul {
 	padding-left: 0.5rem;
+	list-style: none;
+}
+
+label#hide-completed {
+	display: block;
+	background: rgb(242, 249, 254);
+	padding: 0.5rem;
+	border-radius: 0.75rem;
+	margin-top: 1.5rem;
+	width: fit-content;
 }
 </style>
