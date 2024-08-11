@@ -3,13 +3,13 @@ import { ref } from 'vue';
 const tasks = ref([
 	{
 		title: 'Washing machine',
-		completed: true,
-		date: Date.now(),
+		completed: false,
+		date: 1,
 	},
 	{
 		title: 'Cooking',
 		completed: false,
-		date: Date.now(),
+		date: 2,
 	},
 ]);
 
